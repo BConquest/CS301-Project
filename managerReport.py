@@ -47,22 +47,39 @@ class page_ManagerReport(tk.Frame):
         query = (
         "Select store_id, store_name "
         "From grocerystore, manages "
-        "WHERE grocerystore.store_id = manages.store_address AND manages.username = %s"
+        "WHERE grocerystore.address_id = manages.store_address AND manages.username = %s"
         )
         data_query = (username,)
         cursor.execute(query, data_query)
-        result = cursor.fetchone()
-        print(result, end="\t")
-        print(type(result))
-        results[0] = result
+        result = cursor.fetchall()
+        if cursor.rowcount == 1:
+            results[0] = result[0][1]
 
         query = (
         "SELECT sum(quantity) "
         "FROM orderfrom, selectitem "
         "WHERE orderfrom.store_address_id = %s AND orderfrom.order_id = selectitem.order_id"
         )
-        data_query = (result,)
-
+        if cursor.rowcount == 1:
+            data_query = (result[0][0],)
         cursor.execute(query, data_query)
-        results[0] = result
+        result = cursor.fetchall()
+        if cursor.rowcount == 1:
+            results[1] = result[0]
+
+        print(result)
+
+################
+        query = (
+        "SELECT sum(selectitem.quantity * item.listed_price) "
+        "FROM orderfrom, selectitem, item "
+        "WHERE orderfrom.store_address_id = %s AND orderfrom.order_id = selectitem.order_id AND item.item_id = selectitem.item_id"
+        )
+        cursor.execute(query, data_query)
+        result = cursor.fetchall()
+        if cursor.rowcount == 1:
+            results[2] = result[0]
+
+
+
         return results
