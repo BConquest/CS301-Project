@@ -22,7 +22,7 @@ class page_delivererFunctionality(tk.Frame):
         self.controller.show_frame("page_LoginMenu")
 
     def assign(self):
-        print("Assign")
+        self.controller.show_frame("page_DelivererAssign")
 
     def info(self):
         self.controller.show_frame("page_DelivererInfo")
