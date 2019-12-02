@@ -21,6 +21,7 @@ from buyerPayments import page_BuyerPayments
 from delivererMenu import page_delivererFunctionality
 from delivererInfo import page_DelivererInfo
 from delivererAssignments import page_DelivererAssign
+from delivererAssignment import page_DelivererAssignment
 
 from login import page_Login
 from registerMenu import page_Register
@@ -37,7 +38,8 @@ class shopApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.shared_data = {
-            "username": StringVar()
+            "username": StringVar(),
+            "selectedTv": StringVar()
         }
 
         container = tk.Frame(self)
@@ -54,7 +56,8 @@ class shopApp(tk.Tk):
                   page_ManagerInfo, page_ManagerOrders, page_ManagerInventory,
                   page_ManagerReport, page_BuyerFunctionality, page_BuyerInfo,
                   page_BuyerNewOrder, page_BuyerOrders, page_BuyerPayments,
-                  page_delivererFunctionality, page_DelivererInfo, page_DelivererAssign):
+                  page_delivererFunctionality, page_DelivererInfo, page_DelivererAssign,
+                  page_DelivererAssignment):
             print("Initiliazing page: " + F.__name__)
             page_name = F.__name__
             frame = F(parent=container, controller=self)
@@ -81,7 +84,8 @@ class shopApp(tk.Tk):
                   page_ManagerInfo, page_ManagerOrders, page_ManagerInventory,
                   page_ManagerReport, page_BuyerFunctionality, page_BuyerInfo,
                   page_BuyerNewOrder, page_BuyerOrders, page_BuyerPayments,
-                  page_delivererFunctionality, page_DelivererInfo, page_DelivererAssign):
+                  page_delivererFunctionality, page_DelivererInfo, page_DelivererAssign,
+                  page_DelivererAssignment):
             print("Recreating page: " + F.__name__)
             page_name = F.__name__
             frame = F(parent=self.container, controller=self)

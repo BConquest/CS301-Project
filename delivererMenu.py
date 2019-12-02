@@ -7,7 +7,7 @@ class page_delivererFunctionality(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        self.lbl_Title = Label(self, text="Buyer Functionality")
+        self.lbl_Title = Label(self, text="Deliverer Functionality")
 
         self.btn_Assignments = Button(self, text="Assignments", command=self.assign)
         self.btn_AccountInfo = Button(self, text="Account Information", command=self.info)

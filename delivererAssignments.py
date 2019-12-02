@@ -78,4 +78,9 @@ class page_DelivererAssign(tk.Frame):
         self.controller.show_frame("page_delivererFunctionality")
 
     def view(self):
-        print("Hey")
+        viewDict = self.tv_Assignments.item(self.tv_Assignments.selection())['values']
+        var = viewDict[1]
+        #print(viewDict['values'][1])
+        print(var)
+        self.controller.shared_data["selectedTv"].set(var)
+        self.controller.show_frame("page_DelivererAssignment")

@@ -82,11 +82,15 @@ SELECT orderr.order_placed_time, orderr.delivery_time, deliveredby.is_delivered,
 FROM orderr, deliveredby, address, buyer, orderedby
 WHERE orderr.order_id = <orderid> AND deliveredby.order_id = <orderid> AND buyer.address_id =  address.id AND buyer.username = orderedby.buyer_username AND orderedby.order_id = <orderid>
 
+SELECT store_name
+FROM grocerystore, orderfrom
+WHERE store_address_id = store_id and orderfrom.order_id = 13075
+
 SELECT item.item_name, selectitem.quantity
 FROM  selectitem, item
 WHERE selectitem.order_id = <order_id> AND selectitem.item_id = item.item_id
 
-UPDATE SET deliveredby.is_delivered = <status>
+UPDATE deliverdby SET deliveredby.is_delivered = <status>
 where order_id = <order_id>
 
 (25)
@@ -97,3 +101,16 @@ WHERE grocerystore.store_id IN (
 	SELECT manages.store_address
     FROM manages
     where manages.buyer_username = "<username>")
+
+    (26)
+    -- total Items would be done in python --
+    SELECT item_name, description, quantity, listed_price, wholesale_price, exp_date
+    FROM item, soldat, grocerystore, manages
+    WHERE soldat.item_id = item.item_id and soldat.store_id = grocerystore.store_id and grocerystore.address_id = manages.store_address and manages.username = <username>
+
+    -- item id  gotten from python --
+    DELETE FROM item where item.id = <itemid>
+
+    UPDATE item
+    SET item.quantity += 1
+    WHERE item_id = <itemid>
