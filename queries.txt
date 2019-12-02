@@ -16,35 +16,76 @@ TODO
 
 on checkout...
 (13)
-INSERT INTO orderr (<order id>, <instructions>, <delivery time>, date, time)
+INSERT INTO orderr (<AUTO order id>, <instructions>, <delivery time>, <date>, <time>)
 INSERT INTO orderby (<order id>, <username>)
+INSERT INTO orderfrom (<store addr id>, <order id>)
+for x in y
+  INSERT INTO selectitem (<item id>, <quantity>, <order id>)
 
 
 (14)
-SELECT
+-- checking default status done in python --
+SELECT payment_name, account_number, routing_number
+FROM payments
+WHERE payments.username = <username>
+
 
 (15)
-INSERT INTO
+INSERT INTO payments(<pay name>, <acct num>, <rout num>)
+-- if default == yes --
+
+UPDATE buyer set default_payment = <pay name>
+WHERE buyer_username = <username>
+
 
 (16)
-SELECT
+--pay type is brought in from gui--
+--until its delivered, deliverer name is null, checking done in python--
+SELECT DISTINCT selectitem.order_id, order_placed_time, orderr.delivery_time, count(selectitem.quantity)
+FROM selectitem, orderr
+WHERE selectitem.order_id = <order_id> AND orderr.order_id = <order_id>
+
+--if delivered then--
+SELECT DISTINCT selectitem.order_id, userr.first_name, userr.last_name, count(selectitem.quantity), order_placed_time, orderr.delivery_time
+FROM selectitem, orderr, deliveredby, userr
+WHERE selectitem.order_id = <order_id> AND orderr.order_id = <order_id> AND userr.username = deliveredby.deliverer_username AND deliveredby.order_id = <order_id>
+
 
 (17)
+SELECT COUNT(selectitem.item_id), order_id
+from selectitem, item
+where item.item_id = selectitem.item_id AND selectitem.order_id IN (
+    SELECT orderedby.order_id
+    FROM orderedby
+    where orderedby.buyer_username = "sablemagnus")
+GROUP by order_id
 
-(20)
-SELECT
+SELECT orderedby.order_id, orderr.order_placed_date, deliveredby.is_delivered
+from orderedby
+INNER JOIN orderr on orderedby.order_id = orderr.order_id
+INNER JOIN deliveredby on orderedby.order_id = deliveredby.order_id
+where orderedby.buyer_username = "sablemagnus"
+
+SELECT grocerystore.store_name, orderfrom.order_id
+FROM orderfrom
+INNER JOIN grocerystore on orderfrom.store_address_id = grocerystore.store_id
+WHERE orderfrom.order_id IN (
+    SELECT orderedby.order_id
+    FROM orderedby
+    where orderedby.buyer_username = "sablemagnus")
+
+
+
+
 
 (21)
 SELECT orderr.order_placed_time, orderr.delivery_time, deliveredby.is_delivered, address.house_number, address.street, address.city, address.state, address.zip_code
-FROM orderr, deliveredby, address
-WHERE orderr.order_id = <orderid> AND deliveredby.order_id = <orderid> AND buyer.address_id =  address.id
+FROM orderr, deliveredby, address, buyer, orderedby
+WHERE orderr.order_id = <orderid> AND deliveredby.order_id = <orderid> AND buyer.address_id =  address.id AND buyer.username = orderedby.buyer_username AND orderedby.order_id = <orderid>
 
 SELECT item.item_name, selectitem.quantity
 FROM  selectitem, item
 WHERE selectitem.order_id = <order_id> AND selectitem.item_id = item.item_id
 
 (25)
-SELECT
-
-(26)
 SELECT
