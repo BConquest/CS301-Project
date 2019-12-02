@@ -90,7 +90,7 @@ SELECT item.item_name, selectitem.quantity
 FROM  selectitem, item
 WHERE selectitem.order_id = <order_id> AND selectitem.item_id = item.item_id
 
-UPDATE deliverdby SET deliveredby.is_delivered = <status>
+UPDATE deliveredby SET deliveredby.is_delivered = <status>
 where order_id = <order_id>
 
 (25)
