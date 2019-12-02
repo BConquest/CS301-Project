@@ -1,0 +1,50 @@
+(8)
+SELECT store_name , house_number, street, city, state, zip_code, phone, opening_time , closing_time
+FROM grocerystore, address
+WHERE address.id = grocerystore.store_id
+
+
+(11)
+SELECT DISTINCT item_name, description, exp_date, listed_price, quantity
+FROM item, grocerystore, soldat
+WHERE food_group = <item_type> AND soldat.store_id = <groc store id>
+
+
+
+
+TODO
+
+on checkout...
+(13)
+INSERT INTO orderr (<order id>, <instructions>, <delivery time>, date, time)
+INSERT INTO orderby (<order id>, <username>)
+
+
+(14)
+SELECT
+
+(15)
+INSERT INTO
+
+(16)
+SELECT
+
+(17)
+
+(20)
+SELECT
+
+(21)
+SELECT orderr.order_placed_time, orderr.delivery_time, deliveredby.is_delivered, address.house_number, address.street, address.city, address.state, address.zip_code
+FROM orderr, deliveredby, address
+WHERE orderr.order_id = <orderid> AND deliveredby.order_id = <orderid> AND buyer.address_id =  address.id
+
+SELECT item.item_name, selectitem.quantity
+FROM  selectitem, item
+WHERE selectitem.order_id = <order_id> AND selectitem.item_id = item.item_id
+
+(25)
+SELECT
+
+(26)
+SELECT
