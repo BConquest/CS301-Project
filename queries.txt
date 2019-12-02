@@ -86,6 +86,9 @@ SELECT item.item_name, selectitem.quantity
 FROM  selectitem, item
 WHERE selectitem.order_id = <order_id> AND selectitem.item_id = item.item_id
 
+UPDATE SET deliveredby.is_delivered = <status>
+where order_id = <order_id>
+
 (25)
 SELECT grocerystore.store_name, address.house_number, address.street, address.city, address.state, address.zip_code
 FROM address
