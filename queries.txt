@@ -52,19 +52,20 @@ WHERE selectitem.order_id = <order_id> AND orderr.order_id = <order_id> AND user
 
 
 (17)
+-- each is separate query but can be joined by order_id, all done by gui in python--
 SELECT COUNT(selectitem.item_id), order_id
 from selectitem, item
 where item.item_id = selectitem.item_id AND selectitem.order_id IN (
     SELECT orderedby.order_id
     FROM orderedby
-    where orderedby.buyer_username = "sablemagnus")
+    where orderedby.buyer_username = "<username>")
 GROUP by order_id
 
 SELECT orderedby.order_id, orderr.order_placed_date, deliveredby.is_delivered
 from orderedby
 INNER JOIN orderr on orderedby.order_id = orderr.order_id
 INNER JOIN deliveredby on orderedby.order_id = deliveredby.order_id
-where orderedby.buyer_username = "sablemagnus"
+where orderedby.buyer_username = "<username>"
 
 SELECT grocerystore.store_name, orderfrom.order_id
 FROM orderfrom
@@ -72,9 +73,7 @@ INNER JOIN grocerystore on orderfrom.store_address_id = grocerystore.store_id
 WHERE orderfrom.order_id IN (
     SELECT orderedby.order_id
     FROM orderedby
-    where orderedby.buyer_username = "sablemagnus")
-
-
+    where orderedby.buyer_username = "<username>")
 
 
 
@@ -88,4 +87,10 @@ FROM  selectitem, item
 WHERE selectitem.order_id = <order_id> AND selectitem.item_id = item.item_id
 
 (25)
-SELECT
+SELECT grocerystore.store_name, address.house_number, address.street, address.city, address.state, address.zip_code
+FROM address
+INNER JOIN grocerystore on grocerystore.address_id = address.id
+WHERE grocerystore.store_id IN (
+	SELECT manages.store_address
+    FROM manages
+    where manages.buyer_username = "<username>")
